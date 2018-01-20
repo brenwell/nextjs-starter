@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Container, Row, Col, Nav, NavItem, Button, Form, NavLink, Collapse,
          Navbar, NavbarToggler, NavbarBrand, Modal, ModalHeader, ModalBody,
-         ModalFooter, UncontrolledDropdown, DropdownToggle, DropdownMenu, 
+         ModalFooter, UncontrolledDropdown, DropdownToggle, DropdownMenu,
          DropdownItem } from 'reactstrap'
 import Signin from './signin'
 import Session from './session'
@@ -20,7 +20,7 @@ export default class extends React.Component {
       fluid: React.PropTypes.boolean
     }
   }
-  
+
   constructor(props) {
     super(props)
     this.state = {
@@ -40,7 +40,7 @@ export default class extends React.Component {
       modal: !this.state.modal
     })
   }
-  
+
   render() {
     return (
       <React.Fragment>
@@ -97,13 +97,7 @@ export default class extends React.Component {
         <Container fluid={this.props.fluid}>
           <hr className="mt-3"/>
           <p className="text-muted small">
-            <Link href="https://github.com/iaincollins/nextjs-starter"><a className="text-muted font-weight-bold">{Package.name} {Package.version}</a></Link>
-            <span> built with </span>
-            <Link href="https://github.com/zeit/next.js"><a className="text-muted font-weight-bold">Next.js {Package.dependencies.next.replace('^', '')}</a></Link>
-            <span> &amp; </span>
-            <Link href="https://github.com/facebook/react"><a className="text-muted font-weight-bold">React {Package.dependencies.react.replace('^', '')}</a></Link>
-            .
-            <span className="ml-2">&copy; {Package.author}, {new Date().getYear() + 1900}.</span>
+            <span className="ml-2"> {Package.author} &copy; {new Date().getYear() + 1900}</span>
           </p>
         </Container>
         <SigninModal modal={this.state.modal} toggleModal={this.toggleModal} session={this.props.session}/>

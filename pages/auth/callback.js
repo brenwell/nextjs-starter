@@ -12,7 +12,7 @@ export default class extends Page {
   static async getInitialProps({req}) {
     const session = await Session.getSession({force: true, req: req})
 
-    // If the user is signed in, we look for a redirect URL cookie and send 
+    // If the user is signed in, we look for a redirect URL cookie and send
     // them to that page (so people signing in end up back on the page they
     // were on before signing in / signing up).
     //
@@ -29,11 +29,11 @@ export default class extends Page {
         // Read cookie redirect path and remove cookie on client - if one is set
         redirectTo = Cookies.read('redirect_url') || redirectTo
       }
-      
+
       // Allow relative paths only - strip protocol/host/port if they exist
       redirectTo = redirectTo.replace( /^[a-zA-Z]{3,5}\:\/{2}[a-zA-Z0-9_.:-]+\//, '')
     }
-    
+
     return {
       session: session,
       redirectTo: redirectTo
@@ -49,15 +49,15 @@ export default class extends Page {
 
   async componentDidMount() {
     const session = await Session.getSession({force: true})
-    
+
     // Get latest session data after rendering on client
     //
-    // Any page specified as a callback page should do this to force session 
+    // Any page specified as a callback page should do this to force session
     // cache busting on clients.
     this.setState({
       session: session
     })
-    
+
     if (session.user)
       Router.push(this.props.redirectTo)
   }
@@ -121,7 +121,12 @@ export default class extends Page {
         <meta httpEquiv="refresh" content={'1;url='+this.props.redirectTo} />
         <a className="lds-wrapper">
           <div href={this.props.redirectTo} className="lds-css">
-            <div className="lds-ring" style={{width: '100%', height: '100%'}}><div></div><div></div><div></div><div></div></div>
+            <div className="lds-ring" style={{width: '100%', height: '100%'}}>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
           </div>
         </a>
       </React.Fragment>

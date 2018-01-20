@@ -32,7 +32,7 @@ export default class Error extends React.Component {
               <style dangerouslySetInnerHTML={{__html: Styles}}/>
             </Head>
             <Container className="pt-5 text-center">
-              <h1 className="display-4">Page Not Found</h1>
+              <h1 className="display-4">Page Not Found!</h1>
               <p>The page <strong>{ this.props.url.pathname }</strong> does not exist.</p>
               <p><Link href="/"><a>Home</a></Link></p>
             </Container>

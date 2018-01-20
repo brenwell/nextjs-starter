@@ -47,8 +47,8 @@ exports.configure = ({
     serverUrl = null,
     // Mailserver configuration for nodemailer (defaults to localhost if null)
     mailserver = null,
-    // User DB Key. This is always '_id' on MongoDB, but configurable as an 
-    // option to make it easier to refactor the code below if you are using 
+    // User DB Key. This is always '_id' on MongoDB, but configurable as an
+    // option to make it easier to refactor the code below if you are using
     // another database.
     userDbKey = '_id'
   } = {}) => {
@@ -120,12 +120,12 @@ exports.configure = ({
         name: req.user.name,
         email: req.user.email
       }
-      
+
       // If logged in, export the API access token details to the client
       // Note: This token is valid for the duration of this session only.
       if (req.session && req.session.api) {
         session.api = req.session.api
-      }    
+      }
     }
 
     return res.json(session)
@@ -155,9 +155,7 @@ exports.configure = ({
             throw err
           }
 
-          sendVerificationEmail({
-            mailserver: mailserver,
-            fromEmail: 'noreply@' + req.headers.host.split(':')[0],
+          mailserver.sendVerificationEmail({
             toEmail: email,
             url: verificationUrl
           })
@@ -168,9 +166,7 @@ exports.configure = ({
             throw err
           }
 
-          sendVerificationEmail({
-            mailserver: mailserver,
-            fromEmail: 'noreply@' + req.headers.host.split(':')[0],
+          mailserver.sendVerificationEmail({
             toEmail: email,
             url: verificationUrl
           })
@@ -226,22 +222,3 @@ exports.configure = ({
   })
 }
 
-// @TODO Argument validation
-function sendVerificationEmail({mailserver, fromEmail, toEmail, url}) {
-  nodemailer
-  .createTransport(mailserver)
-  .sendMail({
-    to: toEmail,
-    from: fromEmail,
-    subject: 'Sign in link',
-    text: 'Use the link below to sign in:\n\n' + url + '\n\n'
-  }, (err) => {
-    // @TODO Handle errors
-    if (err) {
-      console.log('Error sending email to ' + toEmail, err)
-    }
-  })
-  if (process.env.NODE_ENV === 'development')  {
-    console.log('Generated sign in link ' + url + ' for ' + toEmail)
-  }
-}

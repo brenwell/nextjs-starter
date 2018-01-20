@@ -1,14 +1,15 @@
 import React from 'react'
+import Router from 'next/router'
 import Page from '../../components/page'
 import Layout from '../../components/layout'
 import Session from '../../components/session'
 
 export default class extends Page {
-  
+
   static async getInitialProps({req, res}) {
     // Get latest session (forceing cache busting when rending on client)
     const session = await Session.getSession({force: true, req: req})
-    
+
     // If signed in already, instead of displaying message send to callback page
     // which should redirect them to whatever page it normally sends clients to
     if (session.user) {
@@ -18,12 +19,12 @@ export default class extends Page {
         Router.push('/auth/callback')
       }
     }
-      
+
     return {
       session: session
     }
   }
-  
+
   render() {
     return (
       <Layout {...this.props} navmenu={false}>
